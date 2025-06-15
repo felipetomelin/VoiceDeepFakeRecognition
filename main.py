@@ -12,7 +12,6 @@ path = kagglehub.dataset_download("birdy654/deep-voice-deepfake-voice-recognitio
 print("Path to dataset files:", path)
 
 if __name__ == '__main__':
-    # --- Parâmetros ---
     DATASET_PATH = path
 
     # Verifica se o diretório do dataset existe
@@ -20,11 +19,11 @@ if __name__ == '__main__':
         print(f"ERRO: O diretório do dataset '{DATASET_PATH}' não foi encontrado.")
         print("Por favor, baixe o dataset de https://www.kaggle.com/datasets/birdy654/deep-voice-deepfake-voice-recognition")
     else:
-        # --- Etapa 1: Processamento dos Dados ---
+        # Processamento dos Dados
         processor = AudioProcessor()
         X, y = processor.load_dataset(DATASET_PATH)
 
-        # --- Etapa 2: Divisão dos Dados em Treino, Validação e Teste ---
+        # Divisão dos Dados em Treino, Validação e Teste
         # 70% treino, 15% validação, 15% teste
         X_train, X_temp, y_train, y_temp = train_test_split(X, y, test_size=0.3, random_state=42, stratify=y)
         X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5, random_state=42, stratify=y_temp)
@@ -32,20 +31,17 @@ if __name__ == '__main__':
         print(f"\nDimensões dos conjuntos de dados:")
         print(f"Treino: {X_train.shape}, Validação: {X_val.shape}, Teste: {X_test.shape}")
 
-        # --- Etapa 3: Criação e Treinamento do Modelo ---
+        # Criação e Treinamento do Modelo
         detector = DeepfakeDetector(input_dim=processor.feature_dimension)
         detector.train(X_train, y_train, X_val, y_val, epochs=100)
 
-        # --- Etapa 4: Avaliação do Modelo ---
+        # Avaliação do Modelo
         detector.evaluate(X_test, y_test)
 
-        # --- Etapa 5: Salvando o modelo treinado ---
+        # Salvando o modelo treinado
         detector.save()
 
-        # --- Exemplo de como carregar e usar para uma predição ---
-        print("\n--- Exemplo de predição com modelo carregado ---")
-
-        # Suponha que temos um arquivo para testar (use um do seu dataset)
+        # Trocar por algum arquivo que não seja do dataset
         sample_real_audio = os.path.join(DATASET_PATH, 'real', os.listdir(os.path.join(DATASET_PATH, 'real'))[0])
         sample_fake_audio = os.path.join(DATASET_PATH, 'fake', os.listdir(os.path.join(DATASET_PATH, 'fake'))[0])
 

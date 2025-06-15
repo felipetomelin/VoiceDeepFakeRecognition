@@ -9,9 +9,7 @@ from tensorflow.keras.layers import Dense, Dropout, BatchNormalization, Input
 from tensorflow.keras.models import Sequential, load_model
 
 
-# ==============================================================================
-# 3. CLASSE DO MODELO DE DETECÇÃO (MLP)
-# ==============================================================================
+# CLASSE DO MODELO DE DETECÇÃO (MLP)
 class DeepfakeDetector:
     """
     Classe que encapsula a criação, treinamento, avaliação e predição
